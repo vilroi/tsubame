@@ -20,6 +20,7 @@ type Config struct {
 	Port     int    `json:"port"`
 	Protocol string `json:"protocol"`
 	Timeout  int64  `json:"timeout"`
+	Path     string `json:"shellpath"`
 }
 
 var (
@@ -67,19 +68,16 @@ func (n *NetLineReader) Readline() ([]byte, error) {
 	return line, nil
 }
 
-func loadShell() string {
+func loadShell(shellpath string) {
 	data, err := fs.ReadFile("ash")
 	check(err)
 
-	path := "/tmp/ash"
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0777)
+	f, err := os.OpenFile(shellpath, os.O_WRONLY|os.O_CREATE, 0777)
 	check(err)
 	defer f.Close()
 
 	_, err = f.Write(data)
 	check(err)
-
-	return f.Name()
 }
 
 func check(e error) {
