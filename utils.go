@@ -27,7 +27,7 @@ type Config struct {
 
 var (
 	ErrorTimeOut     = errors.New("Connection timed out")
-	ErrorConnUnavail = errors.New("Connection terminated or unavailable")
+	ErrorConnUnavail = errors.New("Connection has terminated or is inaccessible")
 )
 
 type NetLineReader struct {

