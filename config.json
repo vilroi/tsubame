@@ -1,7 +1,7 @@
 {
 	"address": "localhost",
 	"port": 1234,
-	"protocol": "udp",
+	"protocol": "tcp",
 	"timeout": 5,
 	"shellpath": "/tmp",
 	"debug": true

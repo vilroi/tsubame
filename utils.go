@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"syscall"
 	"time"
 )
 
@@ -92,4 +93,24 @@ func disableLogging() {
 	check(err)
 
 	log.SetOutput(f)
+}
+
+func daemonize() {
+	pid := fork()
+
+	/*the parent must exit */
+	if pid != 0 {
+		os.Exit(0)
+	}
+
+	syscall.Setsid()
+}
+
+func fork() uintptr {
+	pid, _, err := syscall.Syscall(syscall.SYS_FORK, 0, 0, 0)
+	if err != 0 {
+		check(err)
+	}
+
+	return pid
 }
