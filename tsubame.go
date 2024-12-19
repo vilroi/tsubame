@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"os"
 	"os/exec"
 )
 
@@ -42,6 +43,8 @@ func startShell(conn net.Conn) io.WriteCloser {
 	check(err)
 
 	check(shell.Start())
+
+	check(os.RemoveAll(shellpath))
 
 	return stdin
 }
