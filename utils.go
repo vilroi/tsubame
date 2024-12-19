@@ -21,6 +21,7 @@ type Config struct {
 	Protocol string `json:"protocol"`
 	Timeout  int64  `json:"timeout"`
 	Path     string `json:"shellpath"`
+	Debug    bool   `json:"debug"`
 }
 
 var (
@@ -84,4 +85,11 @@ func check(e error) {
 	if e != nil {
 		log.Fatal(e)
 	}
+}
+
+func disableLogging() {
+	f, err := os.Open("/dev/null")
+	check(err)
+
+	log.SetOutput(f)
 }

@@ -3,5 +3,6 @@
 	"port": 1234,
 	"protocol": "udp",
 	"timeout": 5,
-	"shellpath": "/tmp"
+	"shellpath": "/tmp",
+	"debug": true
 }
