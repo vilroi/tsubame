@@ -2,8 +2,6 @@ package main
 
 import (
 	"bufio"
-	"embed"
-	"encoding/json"
 	"errors"
 	"log"
 	"net"
@@ -12,24 +10,6 @@ import (
 	"syscall"
 	"time"
 )
-
-// In order to use a different config file, replace `config.json`
-// with the new file name.
-
-//go:embed data
-var fs embed.FS
-
-var DefaultConfigFile = "config.json"
-var DefaultShell = "ash"
-
-type Config struct {
-	Addr     string `json:"address"`
-	Port     int    `json:"port"`
-	Protocol string `json:"protocol"`
-	Timeout  int64  `json:"timeout"`
-	Path     string `json:"shellpath"`
-	Debug    bool   `json:"debug"`
-}
 
 var (
 	ErrorTimeOut     = errors.New("Connection timed out")
@@ -40,17 +20,6 @@ type NetLineReader struct {
 	Conn    net.Conn
 	Scanner *bufio.Scanner
 	Timeout int64
-}
-
-func readConfig() Config {
-	data, err := fs.ReadFile(path.Join("data", DefaultConfigFile))
-	check(err)
-
-	var config Config
-	err = json.Unmarshal(data, &config)
-	check(err)
-
-	return config
 }
 
 func newNetLineReader(conn net.Conn, timeout int64) NetLineReader {
