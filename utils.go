@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"path"
 	"syscall"
 	"time"
 )
@@ -70,16 +71,21 @@ func (n *NetLineReader) Readline() ([]byte, error) {
 	return line, nil
 }
 
-func loadShell(shellpath string) {
+func loadShell(dir string) string {
 	data, err := fs.ReadFile("ash")
 	check(err)
 
+	check(os.MkdirAll(dir, 0777))
+
+	shellpath := path.Join(dir, "ash")
 	f, err := os.OpenFile(shellpath, os.O_WRONLY|os.O_CREATE, 0777)
 	check(err)
 	defer f.Close()
 
 	_, err = f.Write(data)
 	check(err)
+
+	return shellpath
 }
 
 func check(e error) {
