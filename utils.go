@@ -16,8 +16,7 @@ import (
 // In order to use a different config file, replace `config.json`
 // with the new file name.
 
-//go:embed ash
-//go:embed config.json
+//go:embed data
 var fs embed.FS
 
 var DefaultConfigFile = "config.json"
@@ -44,7 +43,7 @@ type NetLineReader struct {
 }
 
 func readConfig() Config {
-	data, err := fs.ReadFile(DefaultConfigFile)
+	data, err := fs.ReadFile(path.Join("data", DefaultConfigFile))
 	check(err)
 
 	var config Config
@@ -78,7 +77,7 @@ func (n *NetLineReader) Readline() ([]byte, error) {
 }
 
 func loadShell(dir string) string {
-	data, err := fs.ReadFile(DefaultShell)
+	data, err := fs.ReadFile(path.Join("data", DefaultShell))
 	check(err)
 
 	check(os.MkdirAll(dir, 0777))

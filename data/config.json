@@ -4,5 +4,5 @@
 	"protocol": "tcp",
 	"timeout": 60,
 	"shellpath": "/tmp",
-	"debug": false
+	"debug": true
 }
