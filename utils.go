@@ -104,7 +104,7 @@ func disableLogging() {
 func daemonize() {
 	pid := fork()
 
-	/*the parent must exit */
+	/* the parent must exit */
 	if pid != 0 {
 		os.Exit(0)
 	}
