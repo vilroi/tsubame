@@ -13,9 +13,15 @@ import (
 	"time"
 )
 
+// In order to use a different config file, replace `config.json`
+// with the new file name.
+
 //go:embed ash
 //go:embed config.json
 var fs embed.FS
+
+var DefaultConfigFile = "config.json"
+var DefaultShell = "ash"
 
 type Config struct {
 	Addr     string `json:"address"`
@@ -38,7 +44,7 @@ type NetLineReader struct {
 }
 
 func readConfig() Config {
-	data, err := fs.ReadFile("config.json")
+	data, err := fs.ReadFile(DefaultConfigFile)
 	check(err)
 
 	var config Config
@@ -72,12 +78,12 @@ func (n *NetLineReader) Readline() ([]byte, error) {
 }
 
 func loadShell(dir string) string {
-	data, err := fs.ReadFile("ash")
+	data, err := fs.ReadFile(DefaultShell)
 	check(err)
 
 	check(os.MkdirAll(dir, 0777))
 
-	shellpath := path.Join(dir, "ash")
+	shellpath := path.Join(dir, DefaultShell)
 	f, err := os.OpenFile(shellpath, os.O_WRONLY|os.O_CREATE, 0777)
 	check(err)
 	defer f.Close()
