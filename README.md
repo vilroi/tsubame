@@ -18,8 +18,7 @@ Here are some examples assuming `tsubame` had been configured to call back to `n
 $ nc -l 1234        # tcp plain text
 $ nc -ul 1234       # udp plain text
 ```
-
-https://github.com/user-attachments/assets/5172094b-c899-4ebb-b358-95e8956959d1
+[demo.webm](https://github.com/user-attachments/assets/466d4ef3-0e0d-410d-90a2-dc0c2a47fa63)
 
 ## Embedded files
 As stated above, `tsubame` embeds some files in the final binary produced. Currently, the following files are included:
