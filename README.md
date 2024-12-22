@@ -10,6 +10,15 @@ For further details about configuration, please see the relevant section below.
 
 ## Usage
 
+When executed, `tsubame` calls back to the host:port pair specified in the configuration. It is up to user to handle the incoming connection.
+
+Here are some examples assuming `tsubame` had been congiured to call back to `nc` running on port 1234, followed by a demo using `openssl s_server`.
+
+```console
+$ nc -l 1234        # tcp plain text
+$ nc -ul 1234       # udp plain text
+```
+
 ## Embedded files
 As stated above, `tsubame` embeds some files in the final binary produced. Currently, the following files are included:
 
