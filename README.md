@@ -19,6 +19,8 @@ $ nc -l 1234        # tcp plain text
 $ nc -ul 1234       # udp plain text
 ```
 
+https://github.com/user-attachments/assets/5172094b-c899-4ebb-b358-95e8956959d1
+
 ## Embedded files
 As stated above, `tsubame` embeds some files in the final binary produced. Currently, the following files are included:
 
