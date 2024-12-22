@@ -6,9 +6,6 @@ import (
 	"path"
 )
 
-// In order to use a different config file, replace `config.json`
-// with the new file name.
-
 //go:embed data
 var fs embed.FS
 
