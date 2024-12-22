@@ -16,12 +16,17 @@ var DefaultConfigFile = "config.json"
 var DefaultShell = "ash"
 
 type Config struct {
-	Addr     string `json:"address"`
-	Port     int    `json:"port"`
-	Protocol string `json:"protocol"`
-	Timeout  int64  `json:"timeout"`
-	Path     string `json:"shellpath"`
-	Debug    bool   `json:"debug"`
+	Addr     string   `json:"address"`
+	Port     int      `json:"port"`
+	Protocol Protocol `json:"protocol"`
+	Timeout  int64    `json:"timeout"`
+	Path     string   `json:"shellpath"`
+	Debug    bool     `json:"debug"`
+}
+
+type Protocol struct {
+	ConnType string `json:"conn_type"`
+	TLS      bool   `json:"tls"`
 }
 
 func readConfig() Config {
