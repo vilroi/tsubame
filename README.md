@@ -39,7 +39,7 @@ This configuration file is also embedded into the binary along side the shell, a
 
 Please do not rename the file, or the program produced will not work.
 
-As stated earlier, any files to be embedded should be placed in `data/`, and the approprivate variables in `config.go` should be updated. 
+As stated earlier, any files to be embedded should be placed in `data/`, and the appropriate variables in `config.go` should be updated. 
 
 ```go
 //go:embed data
