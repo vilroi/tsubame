@@ -77,4 +77,4 @@ Default config file:
 ``` 
 ## Disclaimer
 
-This program was written for educational purposes. The author will not take responsibility for any other use than educational experimentation. 
+This program was written for educational purposes. The author will not take responsibility for the actions of others.
