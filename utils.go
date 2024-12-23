@@ -54,6 +54,7 @@ func loadShell(dir string) string {
 	check(os.MkdirAll(dir, 0777))
 
 	shellpath := path.Join(dir, DefaultShell)
+	log.Println("loading shell into: ", shellpath)
 	f, err := os.OpenFile(shellpath, os.O_WRONLY|os.O_CREATE, 0777)
 	check(err)
 	defer f.Close()

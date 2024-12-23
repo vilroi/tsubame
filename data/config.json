@@ -3,9 +3,10 @@
 	"port": 1234,
 	"protocol": {
 		"conn_type": "tcp",
-		"tls": true
+		"tls": false
 	},
+	"extract_applets": false,
 	"timeout": 60,
-	"shellpath": "/tmp",
+	"shellpath": "/tmp/busybox",
 	"debug": true
 }

@@ -13,12 +13,13 @@ var DefaultConfigFile = "config.json"
 var DefaultShell = "ash"
 
 type Config struct {
-	Addr     string   `json:"address"`
-	Port     int      `json:"port"`
-	Protocol Protocol `json:"protocol"`
-	Timeout  int64    `json:"timeout"`
-	Path     string   `json:"shellpath"`
-	Debug    bool     `json:"debug"`
+	Addr           string   `json:"address"`
+	Port           int      `json:"port"`
+	Protocol       Protocol `json:"protocol"`
+	Timeout        int64    `json:"timeout"`
+	Path           string   `json:"shellpath"`
+	Debug          bool     `json:"debug"`
+	ExtractApplets bool     `json:"extract_applets"`
 }
 
 type Protocol struct {

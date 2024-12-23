@@ -24,6 +24,7 @@ func TestConfig(t *testing.T) {
 		60,
 		"/tmp",
 		true,
+		true,
 	}
 
 	if !reflect.DeepEqual(expected, config) {
