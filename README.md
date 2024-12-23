@@ -57,25 +57,26 @@ The following is a description of the parameters in the configuration file:
 - `protocol`: The protocol configuration. 
     - `conn_type`: Either "udp" or "tcp"
     - `tls`: Toggles whether to use TLS or not. Currently TLS is only supported when `conn_type` is  "tcp".
+- `extract_applets`: When set to `false`, tsubame only extracts and loads `ash` in to the `shellpath`. When set to `true`, other applets such as `awk`, `dmesg`, `ip` are extracted as well. For the available applets, refer to `var BusyboxApplet` in `busybox.go`.
 - `timeout`: The time out value in **seconds**. The process will automatically terminate if there is no input for the given timeout value. This is useful when using `udp`, where there is no concept of a session. If the server side-process (the listening process) terminates for some reason, the shell will be running on the target machine indefinitely if it were not for the timeout.
 - `shellpath`: The directory `ash` should be written to.
 - `debug`: Toggle debug output.
 
 Default config file: 
-
 ```json
 {
 	"address": "localhost",
 	"port": 1234,
 	"protocol": {
 		"conn_type": "tcp",
-		"tls": true
+		"tls": false
 	},
-	"timeout": 5,
-	"shellpath": "/tmp",
+	"extract_applets": false,
+	"timeout": 60,
+	"shellpath": "/tmp/busybox",
 	"debug": true
 }
-``` 
+```
 ## Disclaimer
 
 This program was written for educational purposes. The author will not take responsibility for the actions of others.
